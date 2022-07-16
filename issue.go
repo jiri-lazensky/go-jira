@@ -305,10 +305,11 @@ type transitionResult struct {
 
 // Transition represents an issue transition in Jira
 type Transition struct {
-	ID     string                     `json:"id" structs:"id"`
-	Name   string                     `json:"name" structs:"name"`
-	To     Status                     `json:"to" structs:"status"`
-	Fields map[string]TransitionField `json:"fields" structs:"fields"`
+	ID      string                     `json:"id" structs:"id"`
+	Name    string                     `json:"name" structs:"name"`
+	To      Status                     `json:"to" structs:"status"`
+	Fields  map[string]TransitionField `json:"fields" structs:"fields"`
+	Comment string                     `json:"comment" structs: "comment"`
 }
 
 // TransitionField represents the value of one Transition
@@ -340,7 +341,8 @@ type TransitionPayloadCommentBody struct {
 
 // TransitionPayload represents the request payload of Transition calls like DoTransition
 type TransitionPayload struct {
-	ID string `json:"id" structs:"id"`
+	ID      string `json:"id" structs:"id"`
+	Comment string `json:"comment" structs:"comment"`
 }
 
 // TransitionPayloadFields represents the fields that can be set when executing a transition
@@ -1253,18 +1255,19 @@ func (s *IssueService) GetTransitions(id string) ([]Transition, *Response, error
 // When performing the transition you can update or set other issue fields.
 //
 // Jira API docs: https://docs.atlassian.com/jira/REST/latest/#api/2/issue-doTransition
-func (s *IssueService) DoTransitionWithContext(ctx context.Context, ticketID, transitionID string) (*Response, error) {
+func (s *IssueService) DoTransitionWithContext(ctx context.Context, ticketID, transitionID, transitionComment string) (*Response, error) {
 	payload := CreateTransitionPayload{
 		Transition: TransitionPayload{
-			ID: transitionID,
+			ID:      transitionID,
+			Comment: transitionComment,
 		},
 	}
 	return s.DoTransitionWithPayloadWithContext(ctx, ticketID, payload)
 }
 
 // DoTransition wraps DoTransitionWithContext using the background context.
-func (s *IssueService) DoTransition(ticketID, transitionID string) (*Response, error) {
-	return s.DoTransitionWithContext(context.Background(), ticketID, transitionID)
+func (s *IssueService) DoTransition(ticketID, transitionID, transitionComment string) (*Response, error) {
+	return s.DoTransitionWithContext(context.Background(), ticketID, transitionID, transitionComment)
 }
 
 // DoTransitionWithPayloadWithContext performs a transition on an issue using any payload.

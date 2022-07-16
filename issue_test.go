@@ -876,7 +876,7 @@ func TestIssueService_DoTransition(t *testing.T) {
 			t.Errorf("Expected %s to be in payload, got %s instead", transitionID, payload.Transition.ID)
 		}
 	})
-	_, err := testClient.Issue.DoTransition("123", transitionID)
+	_, err := testClient.Issue.DoTransition("123", transitionID, "")
 
 	if err != nil {
 		t.Errorf("Got error: %v", err)
