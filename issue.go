@@ -341,8 +341,8 @@ type TransitionPayloadCommentBody struct {
 
 // TransitionPayload represents the request payload of Transition calls like DoTransition
 type TransitionPayload struct {
-	ID      string `json:"id" structs:"id"`
-	Comment string `json:"comment" structs:"comment"`
+	ID      string                   `json:"id" structs:"id"`
+	Comment TransitionPayloadComment `json:"comment,omitempty" structs:"comment,omitempty"`
 }
 
 // TransitionPayloadFields represents the fields that can be set when executing a transition
@@ -1259,9 +1259,10 @@ func (s *IssueService) DoTransitionWithContext(ctx context.Context, ticketID, tr
 	payload := CreateTransitionPayload{
 		Transition: TransitionPayload{
 			ID:      transitionID,
-			Comment: transitionComment,
+			Comment: TransitionPayloadComment{TransitionPayloadCommentBody{transitionComment}},
 		},
 	}
+
 	return s.DoTransitionWithPayloadWithContext(ctx, ticketID, payload)
 }
 
