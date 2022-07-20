@@ -7,8 +7,10 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"mime/multipart"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"reflect"
 	"strconv"
@@ -1281,6 +1283,14 @@ func (s *IssueService) DoTransitionWithPayloadWithContext(ctx context.Context, t
 	if err != nil {
 		return nil, err
 	}
+
+	// DEBUG FORTUNA
+	// - debug outgoing request
+	res, err := httputil.DumpRequest(req, true)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(time.Now(), "request", string(res))
 
 	resp, err := s.client.Do(req, nil)
 	if err != nil {
