@@ -179,6 +179,10 @@ func (c *Client) NewRequestWithContext(ctx context.Context, method, urlStr strin
 		}
 	}
 
+	// DEBUG FORTUNA
+	fmt.Println(time.Now(), "transition payload - body", body)
+	fmt.Println(time.Now(), "transition payload - buffer", buf)
+
 	req, err := newRequestWithContext(ctx, method, u.String(), buf)
 	if err != nil {
 		return nil, err
