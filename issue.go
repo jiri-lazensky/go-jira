@@ -321,9 +321,9 @@ type TransitionField struct {
 
 // CreateTransitionPayload is used for creating new issue transitions
 type CreateTransitionPayload struct {
-	Update     TransitionPayloadUpdate `json:"update,omitempty" structs:"update,omitempty"`
-	Transition TransitionPayload       `json:"transition" structs:"transition"`
-	Fields     TransitionPayloadFields `json:"fields,omitempty" structs:"fields,omitempty"`
+	Update     TransitionPayloadUpdate  `json:"update,omitempty" structs:"update,omitempty"`
+	Transition TransitionPayload        `json:"transition" structs:"transition"`
+	Fields     *TransitionPayloadFields `json:"fields,omitempty" structs:"fields,omitempty"`
 }
 
 // TransitionPayloadUpdate represents the updates of Transition calls like DoTransition
