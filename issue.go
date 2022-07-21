@@ -323,7 +323,7 @@ type TransitionField struct {
 type CreateTransitionPayload struct {
 	Update     TransitionPayloadUpdate `json:"update,omitempty" structs:"update,omitempty"`
 	Transition TransitionPayload       `json:"transition" structs:"transition"`
-	Fields     TransitionPayloadFields `json:"fields" structs:"fields"`
+	Fields     TransitionPayloadFields `json:"fields,omitempty" structs:"fields,omitempty"`
 }
 
 // TransitionPayloadUpdate represents the updates of Transition calls like DoTransition
