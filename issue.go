@@ -1129,6 +1129,10 @@ func (s *IssueService) SearchWithContext(ctx context.Context, jql string, option
 	if err != nil {
 		err = NewJiraError(resp, err)
 	}
+
+	// TODO - DEBUG FORTUNA
+	fmt.Print(time.Now(), "debug-fortuna-found-issues", v.Issues)
+
 	return v.Issues, resp, err
 }
 
